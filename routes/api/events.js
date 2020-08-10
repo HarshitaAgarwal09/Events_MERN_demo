@@ -4,20 +4,16 @@ const router = express.Router();
 const Event = require('../../models/event');
 const { model } = require('mongoose');
 
-//@route GET api/notes
-//@desc get all notes
-//@access Public
+//@route GET api/events
 router.get('/', (req, res) => {
-    Note
+    Event
         .find()
         .sort({ date: -1 })
         .then(notes => res.status(200).json(notes))
         .catch(err => res.status(404).json({ msg: err, success: false }));
 })
 
-//@route post api/notes
-//@desc post a note
-//@access Public
+//@route post api/events
 router.post('/', (req, res) => {
     const newEvent = new Event({
         title: req.body.title,
@@ -30,9 +26,7 @@ router.post('/', (req, res) => {
         .catch(err => res.status(500).json({ msg: err }));
 })
 
-//@route delete api/notes
-//@desc delete a note
-//@access Public
+//@route delete api/events
 router.delete('/:id', (req, res) => {
     Event.findById(req.params.id)
         .then(note =>
