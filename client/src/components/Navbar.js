@@ -1,18 +1,19 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 
-function Navbar() {
+import Register from './auth/Register';
+import Login from './auth/Login';
+
+function NavBar() {
     return (
         <div className="navbar">
-            <span className="navbar_logo">
-                Navbar
-            </span>
-
-            <Button variant="contained" color="primary" className="btn"> Register</Button>
-            <Button variant="contained" color="primary" className="btn">Login</Button>
-            <Button variant="contained" color="primary" className="btn">Logout</Button>
+            <span className="navbar_logo">LOGO</span>
+            <div className="navbar_btn">
+                <Register />
+                <Login />
+                {/* <Button color="primary" className="btn">Logout</Button> */}
+            </div>
         </div>
     );
 }
 
-export default Navbar;
+export default NavBar;

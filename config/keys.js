@@ -1,3 +1,0 @@
-module.exports = {
-    mongoURI: "mongodb+srv://HarshitaAgarwal09:harshita1998@contactmanagercluster.zs8mp.mongodb.net/eventdemo",
-}

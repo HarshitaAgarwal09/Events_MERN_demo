@@ -9,20 +9,24 @@ router.get('/', (req, res) => {
     Event
         .find()
         .sort({ date: -1 })
-        .then(notes => res.status(200).json(notes))
+        .then(events => res.status(200).json(events))
         .catch(err => res.status(404).json({ msg: err, success: false }));
 })
 
 //@route post api/events
 router.post('/', (req, res) => {
     const newEvent = new Event({
-        title: req.body.title,
-        text: req.body.text
+        event_name: req.body.event_name,
+        event_type: req.body.event_type,
+        organiser_name: req.body.organiser_name,
+        organiser_id: req.body.organiser_id,
+        location: req.body.location,
+        event_description: req.body.event_description
     });
 
     newEvent
         .save()
-        .then(note => res.status(201).json({ msg: "Event saved!!" }))
+        .then(event => res.status(201).json({ msg: "Event saved!!" }))
         .catch(err => res.status(500).json({ msg: err }));
 })
 

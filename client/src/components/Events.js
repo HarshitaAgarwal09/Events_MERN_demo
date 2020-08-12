@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import Button from '@material-ui/core/Button';
+import { Button } from 'reactstrap';
+import {
+    Link
+} from "react-router-dom";
 
 import EventItem from './EventItem';
+
 
 
 class Events extends Component {
@@ -83,17 +87,16 @@ class Events extends Component {
         }
     }
     render() {
-        console.log(this.state.events);
         const eventList = this.state.events.map(event => <EventItem event={event} />
         );
         return (
             <div className="events_container">
                 <h1>Events</h1>
-                <Button variant="contained" color="secondary">
-                    Add Event
+                <Button color="secondary" className="btn">
+                    <Link to="/add_event" className="btn_link">Add Event</Link>
                 </Button>
                 {eventList}
-            </div>
+            </div >
         )
     }
 }

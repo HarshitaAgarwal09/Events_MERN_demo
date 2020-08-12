@@ -3,13 +3,15 @@ const mongoose = require('mongoose');
 
 const app = express();
 
-const db = require('./config/keys').mongoURI;
+const config = require('config');
+
+const db = config.get('mongoURI');
 
 app.use(express.json());
 
 //Routes
-const events = require('./routes/api/events');
-app.use('/api/events', events);
+app.use('/api/events', require('./routes/api/events'));
+app.use('/api/auth', require('./routes/api/user'));
 
 mongoose.connect(db, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
     .then(() => console.log("Connected to Database"))

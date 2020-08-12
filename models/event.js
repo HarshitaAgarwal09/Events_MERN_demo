@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const EventSchema = new Schema({
-    event_type: {
+    event_name: {
         type: String,
         required: true
     },
@@ -21,6 +21,11 @@ const EventSchema = new Schema({
     event_description: {
         type: String,
         required: true
+    },
+
+    event_type: {
+        type: String,
+        required: true,
     },
 
     location: {
