@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+
+import {addEvent} from '../actions/eventAction';
+
 class AddingEvent extends Component {
     constructor(props) {
         super(props);
@@ -56,9 +61,9 @@ class AddingEvent extends Component {
 
     handleAddEvent = (e) => {
         e.preventDefault();
+        
         const event = this.state.event;
-
-        //post request
+        this.props.addEvent(event);
 
         this.setState({
             event: {
@@ -69,8 +74,6 @@ class AddingEvent extends Component {
                 "event_description": ""
             }
         });
-
-
     }
     render() {
         return (
@@ -100,14 +103,16 @@ class AddingEvent extends Component {
                         <Label for="event_description_input">Event Description</Label>
                         <Input type="textarea" name="text" id="event_description_input" onChange={this.handleEventDescription} />
                     </FormGroup>
-                    {/* <FormGroup>
-                        <Label for="exampleFile">File</Label>
-                        <Input type="file" name="file" id="exampleFile" />
-                    </FormGroup> */}
                     <Button onClick={this.handleAddEvent}>Add</Button>
                 </Form>
             </div>
         )
     }
 }
-export default AddingEvent;
+
+AddingEvent.propTypes = {
+    addEvent: PropTypes.func.isRequired,
+}
+
+
+export default connect(null,{addEvent})(AddingEvent);

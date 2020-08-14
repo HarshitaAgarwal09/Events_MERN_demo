@@ -5,10 +5,11 @@ const { model } = require('mongoose');
 
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const config = require('config');
 
 const User = require('../../models/user');
 
-//@route post api/auth
+//@route post api/user
 router.post('/', (req, res) => {
 
     const { name, email, password } = req.body;
@@ -31,11 +32,13 @@ router.post('/', (req, res) => {
             if (err) throw err;
             newUser.password = hash;
             newUser.save().then(user => {
-                jwt.sign({ id: user._id }, config.get('JWTsecret'), { expiresIn: 3600 }, (err, token) => {
+                console.log(user);
+                jwt.sign({ _id: user._id }, config.get('JWTsecret'), { expiresIn: 3600 }, (err, token) => {
                     if (err) throw err;
                     return res.json({
+                        msg:"User Saved",
                         user: {
-                            id: user._id,
+                            _id: user._id,
                             name: user.name,
                             email: user.email
                         },
@@ -43,12 +46,12 @@ router.post('/', (req, res) => {
                     })
                 });
             })
+            .catch(err=> {console.log(err)})
         })
     })
 })
 
-
-router.get('/user', (req, res) => {
+router.get('/', (req, res) => {
     User
         .findById(req.user._id)
         .select('password')

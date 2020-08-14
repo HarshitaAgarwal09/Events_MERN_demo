@@ -14,16 +14,22 @@ class EventItem extends Component {
         }
     }
 
+    
+    handleClick = (index) =>{
+        console.log(index);
+    }
+
     render() {
         const { event } = this.state;
+        console.log(event);
         return (
-            <div className="event_item">
+            <div className="event_item" onClick={()=>this.handleClick(this.props.index)}>
                 <img src="https://blogmedia.evbstatic.com/wp-content/uploads/wpmulti/sites/8/2017/08/02112523/iStock-514482753-1.jpg" alt="Event"></img>
                 <div className="event_item_info">
                     <h4>{event.event_name}</h4>
-                    <p>{event.location}</p>
-                    <p>{event.organiser_name}</p>
-                    <p>{event.organiser_id}</p>
+                    <p><b>Event Type:</b>{event.event_type}</p>
+                    <p><b>Location:</b>{event.location}</p>
+                    <p><b>Organiser Name:</b>{event.organiser_name}</p>
                 </div>
             </div>
 

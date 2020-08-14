@@ -6,6 +6,7 @@ const { model } = require('mongoose');
 
 //@route GET api/events
 router.get('/', (req, res) => {
+    console.log("reuest!");
     Event
         .find()
         .sort({ date: -1 })
