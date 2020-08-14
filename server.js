@@ -8,11 +8,12 @@ const { resolve } = require('path');
 const app = express();
 
 
-if(process.env.NODE_ENV === 'production'){
+if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
 
-    app.get('*',(req,res)=>{
-        res.sendFile(path,resolve(__dirname,'client','build','index.html'));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     })
 }
 
@@ -24,8 +25,8 @@ app.use(express.json());
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     next();
-  });
-  
+});
+
 //Routes
 app.use('/api/events', require('./routes/api/events'));
 app.use('/api/auth', require('./routes/api/auth'));
