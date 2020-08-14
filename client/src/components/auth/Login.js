@@ -1,9 +1,9 @@
 import React, { useState, Fragment } from 'react';
 import { Button, Modal, Form, FormGroup, Label, Input, ModalBody } from 'reactstrap';
 
-import {useSelector, useDispatch} from 'react-redux'; 
+import { useSelector, useDispatch } from 'react-redux';
 
-import {login} from '../../actions/authAction';
+import { login } from '../../actions/authAction';
 
 const Login = () => {
 
@@ -11,12 +11,12 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const auth = useSelector(state=>state.auth);
-    const error = useSelector(state=>state.error);
+    const auth = useSelector(state => state.auth);
+    // const error = useSelector(state=>state.error);
     const dispatch = useDispatch();
 
     const toggle = () => setModal(!modal);
-    const handleEmail = (e) =>  setEmail(e.target.value) 
+    const handleEmail = (e) => setEmail(e.target.value)
     const handlePassword = (e) => setPassword(e.target.value);
 
     const handleLogin = (e) => {
@@ -28,8 +28,8 @@ const Login = () => {
         }
 
         dispatch(login(user));
-        
-        if(auth.isAuthenticated==true){
+
+        if (auth.isAuthenticated === true) {
             toggle();
             setEmail("");
             setPassword("");
@@ -41,7 +41,7 @@ const Login = () => {
             <Button color="primary" onClick={toggle}>Login</Button>
             <Modal isOpen={modal} toggle={toggle} >
                 <ModalBody>
-                {/* <p>{error.msg}</p> */}
+                    {/* <p>{error.msg}</p> */}
                     <Form >
                         <FormGroup>
                             <Label for="email">Email</Label>

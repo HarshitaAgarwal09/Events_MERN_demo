@@ -1,9 +1,9 @@
 import React, { useState, Fragment } from 'react';
 import { Button, Modal, Form, FormGroup, Label, Input, ModalBody } from 'reactstrap';
 
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import {register} from '../../actions/authAction';
+import { register } from '../../actions/authAction';
 
 const Register = (props) => {
 
@@ -12,17 +12,17 @@ const Register = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const auth = useSelector(state=>state.auth);
-    const error = useSelector(state=>state.error);
+    const auth = useSelector(state => state.auth);
+    // const error = useSelector(state => state.error);
 
     const dispatch = useDispatch();
 
 
     const toggle = () => setModal(!modal);
 
-    const handleName = (e) =>  setName(e.target.value);
-    const handleEmail = (e) =>  setEmail(e.target.value);
-    const handlePassword = (e) =>  setPassword(e.target.value);
+    const handleName = (e) => setName(e.target.value);
+    const handleEmail = (e) => setEmail(e.target.value);
+    const handlePassword = (e) => setPassword(e.target.value);
 
     const handleRegister = (e) => {
         e.preventDefault();
@@ -35,7 +35,7 @@ const Register = (props) => {
 
         dispatch(register(user));
 
-        if(auth.isAuthenticated==true){
+        if (auth.isAuthenticated === true) {
             toggle();
             setName("");
             setEmail("");
@@ -47,9 +47,9 @@ const Register = (props) => {
         <Fragment>
             <Button color="primary" onClick={toggle}>Register</Button>
             <Modal isOpen={modal} toggle={toggle} >
-                
+
                 <ModalBody>
-                {/* <p>{error.msg}</p> */}
+                    {/* <p>{error.msg}</p> */}
                     <Form >
                         <FormGroup>
                             <Label for="name_input">Name</Label>
@@ -71,5 +71,5 @@ const Register = (props) => {
     );
 }
 
- 
+
 export default Register;
