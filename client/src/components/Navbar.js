@@ -8,7 +8,7 @@ import Login from './auth/Login';
 
 import { logout } from '../actions/authAction';
 
-function NavBar(props) {
+function Navbar(props) {
     const auth = useSelector(state => state.auth);
     const dispatch = useDispatch();
 
@@ -33,4 +33,4 @@ function NavBar(props) {
 }
 
 
-export default NavBar;
+export default Navbar;
