@@ -19,8 +19,8 @@ export const getEvents = () => dispatch => {
         });
 }
 
-export const addEvent = (event) => (dispatch, getState) => {
-
+export const addEvent = (event, history) => (dispatch, getState) => {
+    // console.log(history);
     event = {
         ...event,
         organiser_id: getState().auth.user._id,
@@ -30,6 +30,7 @@ export const addEvent = (event) => (dispatch, getState) => {
     axios.post('/api/events', event)
         .then(res => {
             dispatch(clearErrors());
+            // console.log(history);
         })
         .catch((err) => {
             if (err.response) { dispatch(returnErrors(err.response.data.msg, err.response.status)); }

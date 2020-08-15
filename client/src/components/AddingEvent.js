@@ -64,7 +64,7 @@ class AddingEvent extends Component {
         e.preventDefault();
 
         const event = this.state.event;
-        this.props.addEvent(event);
+        this.props.addEvent(event, this.props.history);
     }
 
     render() {

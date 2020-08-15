@@ -27,7 +27,7 @@ router.post('/', (req, res) => {
                 if (!isMatch)
                     return res.status(400).json({ msg: "Not Authenticated" });
 
-                jwt.sign({ id: user._id }, config.get('JWTsecret'), { expiresIn: 3600 }, (err, token) => {
+                jwt.sign({ _id: user._id }, config.get('JWTsecret'), { expiresIn: 3600 }, (err, token) => {
                     if (err) throw err;
                     return res.json({
                         user: {
