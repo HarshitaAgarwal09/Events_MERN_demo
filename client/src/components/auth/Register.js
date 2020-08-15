@@ -1,9 +1,10 @@
 import React, { useState, Fragment } from 'react';
-import { Button, Modal, Form, FormGroup, Label, Input, ModalBody } from 'reactstrap';
+import { Button, Modal, Form, FormGroup, Label, Input, ModalBody, Alert } from 'reactstrap';
 
 import { useDispatch, useSelector } from 'react-redux';
 
 import { register } from '../../actions/authAction';
+import { clearErrors } from '../../actions/errorAction';
 
 const Register = (props) => {
 
@@ -13,12 +14,15 @@ const Register = (props) => {
     const [password, setPassword] = useState("");
 
     const auth = useSelector(state => state.auth);
-    // const error = useSelector(state => state.error);
+    const error = useSelector(state => state.error);
 
     const dispatch = useDispatch();
 
 
-    const toggle = () => setModal(!modal);
+    const toggle = () => {
+        setModal(!modal);
+        dispatch(clearErrors());
+    }
 
     const handleName = (e) => setName(e.target.value);
     const handleEmail = (e) => setEmail(e.target.value);
@@ -42,14 +46,16 @@ const Register = (props) => {
             setPassword("");
         }
     }
-
+    const errorElement = (error && error.msg && error.msg.msg ? <Alert color="danger">
+        {error.msg.msg}
+    </Alert> : <p></p>)
     return (
         <Fragment>
             <Button color="primary" onClick={toggle}>Register</Button>
             <Modal isOpen={modal} toggle={toggle} >
 
                 <ModalBody>
-                    {/* <p>{error.msg}</p> */}
+                    {errorElement}
                     <Form >
                         <FormGroup>
                             <Label for="name_input">Name</Label>

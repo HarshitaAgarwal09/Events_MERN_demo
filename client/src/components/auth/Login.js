@@ -1,9 +1,10 @@
 import React, { useState, Fragment } from 'react';
-import { Button, Modal, Form, FormGroup, Label, Input, ModalBody } from 'reactstrap';
+import { Button, Modal, Form, FormGroup, Label, Input, ModalBody, Alert } from 'reactstrap';
 
 import { useSelector, useDispatch } from 'react-redux';
 
 import { login } from '../../actions/authAction';
+import { clearErrors } from '../../actions/errorAction';
 
 const Login = () => {
 
@@ -12,10 +13,15 @@ const Login = () => {
     const [password, setPassword] = useState("");
 
     const auth = useSelector(state => state.auth);
-    // const error = useSelector(state=>state.error);
+    const error = useSelector(state => state.error);
+
     const dispatch = useDispatch();
 
-    const toggle = () => setModal(!modal);
+    const toggle = () => {
+        setModal(!modal);
+        dispatch(clearErrors());
+    }
+
     const handleEmail = (e) => setEmail(e.target.value)
     const handlePassword = (e) => setPassword(e.target.value);
 
@@ -36,13 +42,17 @@ const Login = () => {
         }
     }
 
+    const errorElement = (error && error.msg && error.msg.msg ? <Alert color="danger">
+        {error.msg.msg}
+    </Alert> : <p></p>)
+
     return (
         <Fragment>
             <Button color="primary" onClick={toggle}>Login</Button>
             <Modal isOpen={modal} toggle={toggle} >
                 <ModalBody>
-                    {/* <p>{error.msg}</p> */}
                     <Form >
+                        {errorElement}
                         <FormGroup>
                             <Label for="email">Email</Label>
                             <Input type="email" name="email" id="email" placeholder="Enter your Email" onChange={handleEmail} />

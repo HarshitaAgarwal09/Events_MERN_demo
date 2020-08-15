@@ -10,11 +10,15 @@ import './App.css';
 
 import store from './store';
 
+import { loadUser } from './actions/authAction';
+
 import Navbar from './components/Navbar';
 import Events from './components/Events';
 import AddingEvent from './components/AddingEvent';
 
 function App() {
+    store.dispatch(loadUser());
+
     return (
         <Provider store={store}>
             <Router>

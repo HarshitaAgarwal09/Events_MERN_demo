@@ -7,6 +7,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
+const auth = require('../../middleware/auth');
+
+// import { auth } from '../../middleware/auth.js';
 const User = require('../../models/user');
 
 //@route post api/user
@@ -36,7 +39,7 @@ router.post('/', (req, res) => {
                 jwt.sign({ _id: user._id }, config.get('JWTsecret'), { expiresIn: 3600 }, (err, token) => {
                     if (err) throw err;
                     return res.json({
-                        msg:"User Saved",
+                        msg: "User Saved",
                         user: {
                             _id: user._id,
                             name: user.name,
@@ -46,18 +49,19 @@ router.post('/', (req, res) => {
                     })
                 });
             })
-            .catch(err=> {console.log(err)})
+                .catch(err => { console.log(err) })
         })
     })
 })
 
-router.get('/', (req, res) => {
-    User
-        .findById(req.user._id)
-        .select('password')
-        .then(user => res.status(200).json(user))
-        .catch(err => res.status(404).json({ msg: err, success: false }));
-
-})
+router.get('/', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        if (!user) throw Error('User Does not exist');
+        res.json(user);
+    } catch (e) {
+        res.status(400).json({ msg: e.message });
+    }
+});
 
 module.exports = router;

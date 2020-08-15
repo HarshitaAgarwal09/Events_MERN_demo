@@ -1,19 +1,21 @@
-const config = reuire('config');
+const config = require('config');
 const jwt = require('jsonwebtoken');
 
-function auth(re, res, next) {
+const auth = (req, res, next) => {
     const token = req.header('x-auth-token');
 
-    if (!token) {
-        return res.status(401).json("Not Authenticated!");
-    }
+    // Check for token
+    if (!token)
+        return res.status(401).json({ msg: 'No token, authorizaton denied' });
+
     try {
+        // Verify token
         const decoded = jwt.verify(token, config.get('JWTsecret'));
+        // Add user from payload
         req.user = decoded;
         next();
-    }
-    catch (e) {
-        res.status(400).json({ msg: 'Token Not Valid' });
+    } catch (e) {
+        res.status(400).json({ msg: 'Token is not valid' });
     }
 }
 

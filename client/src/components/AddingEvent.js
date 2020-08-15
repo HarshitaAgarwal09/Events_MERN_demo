@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
 
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-import {addEvent} from '../actions/eventAction';
+import { addEvent } from '../actions/eventAction';
 
 class AddingEvent extends Component {
     constructor(props) {
@@ -61,7 +61,7 @@ class AddingEvent extends Component {
 
     handleAddEvent = (e) => {
         e.preventDefault();
-        
+
         const event = this.state.event;
         this.props.addEvent(event);
 
@@ -76,14 +76,38 @@ class AddingEvent extends Component {
         });
     }
     render() {
+        let errorMessage = <></>;
+        let errorMessageName = <></>;
+        let errorMessageType = <></>;
+        let errorMessageLocation = <></>;
+        let errorMessageDescription = <></>;
+
+        if (this.props.error.msg) {
+            const errors = this.props.error.msg.errors;
+            const message = this.props.error.msg._message;
+
+            if (message) errorMessage = <Alert color="danger">{message}</Alert>
+
+            if (errors) {
+                if (errors.event_name) errorMessageName = <Alert color="danger">Event Name {errors.event_name.kind} </Alert>
+                if (errors.event_type) errorMessageType = <Alert color="danger">Event Type {errors.event_type.kind} </Alert>
+                if (errors.location) errorMessageLocation = <Alert color="danger">Event Location {errors.location.kind} </Alert>
+                if (errors.event_description) errorMessageDescription = <Alert color="danger">Event Description {errors.event_description.kind} </Alert>
+            }
+        }
+
         return (
             <div className="event_form">
+                {errorMessage}
                 <Form>
+
+                    {errorMessageName}
                     <FormGroup>
                         <Label for="event_name_input">Event Name:</Label>
                         <Input type="text" name="event_name" id="event_name_input" placeholder="Enter event name" onChange={this.handleEventName} />
                     </FormGroup>
 
+                    {errorMessageType}
                     <FormGroup>
                         <Label for="event_type_input">Event Type</Label>
                         <Input type="select" name="select" id="event_type_input" onClick={this.handleEventType} placeholder="Select">
@@ -93,12 +117,13 @@ class AddingEvent extends Component {
                         </Input>
                     </FormGroup>
 
+                    {errorMessageLocation}
                     <FormGroup>
                         <Label for="location_input">Event Location</Label>
                         <Input type="text" name="location" id="location_input" placeholder="Enter event location" onChange={this.handleEventLocation} />
                     </FormGroup>
 
-
+                    {errorMessageDescription}
                     <FormGroup>
                         <Label for="event_description_input">Event Description</Label>
                         <Input type="textarea" name="text" id="event_description_input" onChange={this.handleEventDescription} />
@@ -114,5 +139,8 @@ AddingEvent.propTypes = {
     addEvent: PropTypes.func.isRequired,
 }
 
+const mapStateToProps = (state) => ({
+    error: state.error
+})
 
-export default connect(null,{addEvent})(AddingEvent);
+export default connect(mapStateToProps, { addEvent })(AddingEvent);
