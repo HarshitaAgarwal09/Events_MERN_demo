@@ -11,6 +11,7 @@ class AddingEvent extends Component {
         super(props);
         this.state = {
             event: {
+                "event_name": "",
                 "event_type": "",
                 "organiser_name": "",
                 "organiser_id": "",
@@ -64,16 +65,6 @@ class AddingEvent extends Component {
 
         const event = this.state.event;
         this.props.addEvent(event);
-
-        this.setState({
-            event: {
-                "event_type": "",
-                "organiser_name": "",
-                "organiser_id": "",
-                "location": "",
-                "event_description": ""
-            }
-        });
     }
 
     render() {
@@ -90,6 +81,7 @@ class AddingEvent extends Component {
             if (message) errorMessage = <Alert color="danger">{message}</Alert>
 
             if (errors) {
+
                 if (errors.event_name) errorMessageName = <Alert color="danger">Event Name {errors.event_name.kind} </Alert>
                 if (errors.event_type) errorMessageType = <Alert color="danger">Event Type {errors.event_type.kind} </Alert>
                 if (errors.location) errorMessageLocation = <Alert color="danger">Event Location {errors.location.kind} </Alert>
@@ -105,13 +97,13 @@ class AddingEvent extends Component {
                     {errorMessageName}
                     <FormGroup>
                         <Label for="event_name_input">Event Name:</Label>
-                        <Input type="text" name="event_name" id="event_name_input" placeholder="Enter event name" onChange={this.handleEventName} />
+                        <Input type="text" name="event_name" id="event_name_input" value={this.state.event_name} placeholder="Enter event name" onChange={this.handleEventName} />
                     </FormGroup>
 
                     {errorMessageType}
                     <FormGroup>
                         <Label for="event_type_input">Event Type</Label>
-                        <Input type="select" name="select" id="event_type_input" onClick={this.handleEventType} placeholder="Select">
+                        <Input type="select" name="select" id="event_type_input" value={this.state.event_type} onClick={this.handleEventType} placeholder="Select">
                             <option value="" hidden>Select Event Type</option>
                             <option value="Online">Online</option>
                             <option value="Offline">Offline</option>
@@ -121,13 +113,13 @@ class AddingEvent extends Component {
                     {errorMessageLocation}
                     <FormGroup>
                         <Label for="location_input">Event Location</Label>
-                        <Input type="text" name="location" id="location_input" placeholder="Enter event location" onChange={this.handleEventLocation} />
+                        <Input type="text" name="location" id="location_input" value={this.state.location} placeholder="Enter event location" onChange={this.handleEventLocation} />
                     </FormGroup>
 
                     {errorMessageDescription}
                     <FormGroup>
                         <Label for="event_description_input">Event Description</Label>
-                        <Input type="textarea" name="text" id="event_description_input" onChange={this.handleEventDescription} />
+                        <Input type="textarea" name="text" id="event_description_input" value={this.state.event_description} onChange={this.handleEventDescription} />
                     </FormGroup>
                     <Button onClick={this.handleAddEvent}>Add</Button>
                 </Form>

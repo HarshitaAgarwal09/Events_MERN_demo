@@ -26,8 +26,11 @@ router.post('/', (req, res) => {
 
     newEvent
         .save()
-        .then(event => res.status(201).json({ msg: "Event saved!!" }))
-        .catch(err => res.status(500).json({ msg: err }));
+        .then(event => res.json({ msg: "Event saved!!" }))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ msg: err })
+        });
 })
 
 //@route delete api/events

@@ -15,18 +15,15 @@ export const getEvents = () => dispatch => {
             })
         })
         .catch((err) => {
-            // dispatch({
-            //     type: AUTH_ERROR
-            // });
             dispatch(returnErrors(err.response.data.msg, err.response.status));
-        });;
+        });
 }
 
 export const addEvent = (event) => (dispatch, getState) => {
 
     event = {
         ...event,
-        organiser_id: getState().auth.user.id,
+        organiser_id: getState().auth.user._id,
         organiser_name: getState().auth.user.name,
     }
 
@@ -35,9 +32,7 @@ export const addEvent = (event) => (dispatch, getState) => {
             dispatch(clearErrors());
         })
         .catch((err) => {
-            // dispatch({
-            //     type: AUTH_ERROR
-            // });
-            dispatch(returnErrors(err.response.data.msg, err.response.status));
+            if (err.response) { dispatch(returnErrors(err.response.data.msg, err.response.status)); }
+            else alert("Some error occures");
         });
 }

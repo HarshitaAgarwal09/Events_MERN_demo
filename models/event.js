@@ -14,8 +14,7 @@ const EventSchema = new Schema({
 
     organiser_id: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
 
     event_description: {
