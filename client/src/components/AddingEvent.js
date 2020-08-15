@@ -75,6 +75,7 @@ class AddingEvent extends Component {
             }
         });
     }
+
     render() {
         let errorMessage = <></>;
         let errorMessageName = <></>;

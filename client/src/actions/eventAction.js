@@ -1,7 +1,8 @@
-import { GET_EVENT } from './types';
 import axios from 'axios';
 
+import { GET_EVENT } from './types';
 import { returnErrors, clearErrors } from './errorAction';
+
 
 export const getEvents = () => dispatch => {
 
